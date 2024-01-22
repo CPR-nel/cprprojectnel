@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket         = "nel-backend-tfstate"
+    key            = "pet/terraform.tfstate"
+    region         = "us-east-2"
+    encrypt        = true
+    }
+}
+
 # Security Groups
 module "sg" {
   source = "./modules/sg"

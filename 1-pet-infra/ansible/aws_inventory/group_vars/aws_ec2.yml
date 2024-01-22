@@ -1,0 +1,25 @@
+---
+# ssh connection
+ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+ansible_ssh_user: ubuntu
+ansible_ssh_private_key_file:  /var/lib/jenkins/.ssh/docupet.pem
+ansible_interpreter_python: /usr/bin/python3
+
+# database settings
+db_host: "{{ lookup('file', '/var/lib/jenkins/workspace/docupet_pre/1-pet-infra/terraform/ansible_vars.json') | from_json | json_query('rds_hostname') }}"
+db_name: docupetdb
+login_port: 3306
+
+# web server
+web_port: 80
+web_host: "{{ lookup('file', '/var/lib/jenkins/workspace/docupet_pre/1-pet-infra/terraform/ansible_vars.json') | from_json | json_query('web_server_ip') }}"
+
+# git settings
+repo_url: "https://github.com/CPR-nel"
+repo_name: "cprprojectnel"
+git_branch: "pre"
+repo_dir: "/home/ubuntu/docupet-in-production"
+
+# SQL script file
+script_file: "/home/ubuntu/docupet-in-production/docupetdb.sql"
+...

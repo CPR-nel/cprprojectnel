@@ -25,5 +25,5 @@ username       = "admin"
 db_password    = "Password0123"
 
 # key-pair
-home_dir = "/home/ec2-user"
-key_name = "lamp-test"
+home_dir = "/var/lib/jenkins"
+key_name = "docupet"
