@@ -1,10 +1,10 @@
 <?php
 ob_start();
 //DB Connection
-define('DB_HOST','gymdb.ckufjagp4ysm.us-east-1.rds.amazonaws.com');
+define('DB_HOST','docupetdb.ckufjagp4ysm.us-east-1.rds.amazonaws.com');
 define('DB_USER','admin');
 define('DB_PASS','adminadmin');
-define('DB_NAME','gymdb');
+define('DB_NAME','docupetdb');
 // Establish database connection.
 try
 {

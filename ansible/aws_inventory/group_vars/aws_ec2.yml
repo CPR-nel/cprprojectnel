@@ -6,17 +6,17 @@ ansible_ssh_private_key_file: /home/ec2-user/.ssh/lamp-test.pem
 ansible_interpreter_python: /usr/bin/python3
 
 # database settings
-db_host: "{{ lookup('file', '/home/ec2-user/lamp-stack-ansible-terraform/terraform/ansible_vars.json') | from_json | json_query('rds_hostname') }}"
+db_host: "{{ lookup('file', '/home/ec2-user/cprprojectnel/terraform/ansible_vars.json') | from_json | json_query('rds_hostname') }}"
 db_name: docupetdb
 login_port: 3306
 
 # web server
 web_port: 80
-web_host: "{{ lookup('file', '/home/ec2-user/lamp-stack-ansible-terraform/terraform/ansible_vars.json') | from_json | json_query('web_server_ip') }}"
+web_host: "{{ lookup('file', '/home/ec2-user/cprprojectnel/terraform/ansible_vars.json') | from_json | json_query('web_server_ip') }}"
 
 # git settings
-repo_url: "https://github.com/nellykatari"
-repo_name: "gym-lamp-stack"
+repo_url: "https://github.com/CPR-nel"
+repo_name: "cprprojectnel"
 git_branch: "dev"
 repo_dir: "/home/ubuntu/lamp-in-production"
 

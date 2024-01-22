@@ -37,8 +37,8 @@
 		</div>
 		<div class="header-bottom">
 			<a href="index.php" class="site-logo" style="color:#fff; font-weight:bold; font-size:26px;">
-				GYM MS<br />
-				<small style="margin-top:-4%;">Gym Management System</small>
+				DOCUPET - MFF<br />
+				<small style="margin-top:-4%;">Pet Licensing Company</small>
 			</a>
 			
 			<div class="container">

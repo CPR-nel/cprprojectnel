@@ -8,15 +8,15 @@ include  'include/config.php';
 if(isset($_POST['Submit'])){
 
 $category = $_POST['category'];
-$titlename = $_POST['titlename'];$package = $_POST['package'];$packageduratiobn = $_POST['packageduratiobn'];$Price = $_POST['Price'];$photo = $_POST['photo'];$description = $_POST['description'];
+$titlename = $_POST['titlename'];$package = $_POST['package'];$NumberOfPets = $_POST['NumberOfPets'];$Price = $_POST['Price'];$photo = $_POST['photo'];$description = $_POST['description'];
 
-$sql="INSERT INTO tbladdpackage (category,titlename,PackageType,PackageDuratiobn,Price,uploadphoto,Description) 
-Values(:category,:titlename,:package,:packageduratiobn,:Price,:photo,:description)";
+$sql="INSERT INTO tbladdpackage (category,titlename,PackageType,NumberOfPets,Price,uploadphoto,Description) 
+Values(:category,:titlename,:package,:NumberOfPets,:Price,:photo,:description)";
 $query = $dbh -> prepare($sql);
 $query->bindParam(':category',$category,PDO::PARAM_STR);
 $query->bindParam(':titlename',$titlename,PDO::PARAM_STR);
 $query->bindParam(':package',$package,PDO::PARAM_STR);
-$query->bindParam(':packageduratiobn',$packageduratiobn,PDO::PARAM_STR);
+$query->bindParam(':NumberOfPets',$NumberOfPets,PDO::PARAM_STR);
 $query->bindParam(':Price',$Price,PDO::PARAM_STR);
 $query->bindParam(':photo',$photo,PDO::PARAM_STR);
 $query->bindParam(':description',$description,PDO::PARAM_STR);
@@ -104,7 +104,7 @@ $errormsg= "Data not insert successfully";
 
                  <div class="form-group col-md-6">
                   <label class="control-label">Package Duration</label>
-                  <input class="form-control" type="text" name="packageduratiobn" name="packageduratiobn" placeholder="Enter Package Duratiobn">
+                  <input class="form-control" type="text" name="NumberOfPets" name="NumberOfPets" placeholder="Enter Package Duratiobn">
                 </div>
 
                  <div class="form-group col-md-6">

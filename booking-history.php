@@ -64,7 +64,7 @@ $uid=$_SESSION['uid'];
         <th hidden>email</th>
         <th>bookingdate</th>
         <th>title</th>
-        <th>PackageDuratiobn</th>
+        <th>NumberOfPets</th>
         <th>price</th>
         <th>Description</th>
         <th>category_name</th>
@@ -76,8 +76,8 @@ $uid=$_SESSION['uid'];
     </thead>
           <?php
           $uid=$_SESSION['uid'];
-                  /*$sql="select id, product_id, userid, product_title, packages, category, PackageDuratiobn, price, descripation, booking_date from tblbooking where userid=:uid";*/
-                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.PackageDuratiobn as PackageDuratiobn,
+                  /*$sql="select id, product_id, userid, product_title, packages, category, NumberOfPets, price, descripation, booking_date from tblbooking where userid=:uid";*/
+                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.NumberOfPets as NumberOfPets,
 t2.Price as Price,t2.Description as Description,t4.category_name as category_name,t5.PackageName as PackageName FROM tblbooking as t1
  join tbladdpackage as t2
 on t1.package_id =t2.id
@@ -107,7 +107,7 @@ where t1.userid=:uid";
                     <td hidden><?php echo htmlentities($result->email);?></td>
                     <td><?php echo htmlentities($result->bookingdate);?></td>
                     <td><?php echo htmlentities($result->title);?></td>
-                    <td><?php echo htmlentities($result->PackageDuratiobn);?></td>
+                    <td><?php echo htmlentities($result->NumberOfPets);?></td>
                     <td><?php echo $result->Price;?></td>
                     <td><?php echo $result->Description;?></td>
                     <td><?php echo htmlentities($result->category_name);?></td>

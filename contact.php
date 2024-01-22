@@ -24,7 +24,7 @@ echo "<script>window.location.href='booking-history.php'</script>";
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>Gym Management System</title>
+	<title>Pet Licensing Company</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="Ahana Yoga HTML Template">
 	<meta name="keywords" content="yoga, html">
@@ -73,9 +73,9 @@ echo "<script>window.location.href='booking-history.php'</script>";
 			<div class="row">
 
 				<div class="col-lg-12 col-sm-6">
-<p><strong>Email:</strong> info@yourdomain.com</p>
-<p><strong>Contact No:</strong> 1234567890, 1122334455</p>
-<p><strong>Address:</strong> Test Address</p>
+<p><strong>Email:</strong> lym.hounnou@gmail.com</p>
+<p><strong>Contact No:</strong> 403-564-8952</p>
+<p><strong>Address:</strong> Calgary, AB</p>
 				</div>
 			</div>
 		</div>

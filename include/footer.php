@@ -6,7 +6,7 @@
 					
 					<div class="col-md-8 text-md-right">
 						<div class="copyright"> 
-GYM Managaement System</div>
+DOCUPET - MFF</div>
 					</div>
 				</div>
 			</div>

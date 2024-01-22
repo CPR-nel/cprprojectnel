@@ -24,7 +24,7 @@ echo "<script>window.location.href='booking-history.php'</script>";
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>Gym Management System</title>
+	<title>Pet Licensing Company</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="Ahana Yoga HTML Template">
 	<meta name="keywords" content="yoga, html">
@@ -58,7 +58,7 @@ echo "<script>window.location.href='booking-history.php'</script>";
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
-					<h2>About GYM Management System</h2>
+					<h2>About DOCUPET - MFF</h2>
 				</div>
 			</div>
 		</div>

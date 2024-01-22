@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gymdb`
+-- Database: `docupetdb`
 --
 
 -- --------------------------------------------------------
@@ -57,7 +57,7 @@ CREATE TABLE `tbladdpackage` (
   `category` varchar(45) DEFAULT NULL,
   `titlename` varchar(450) DEFAULT NULL,
   `PackageType` varchar(45) DEFAULT NULL,
-  `PackageDuratiobn` varchar(45) DEFAULT NULL,
+  `NumberOfPets` varchar(45) DEFAULT NULL,
   `Price` varchar(45) DEFAULT NULL,
   `uploadphoto` varchar(450) DEFAULT NULL,
   `Description` varchar(450) DEFAULT NULL,
@@ -68,10 +68,10 @@ CREATE TABLE `tbladdpackage` (
 -- Dumping data for table `tbladdpackage`
 --
 
-INSERT INTO `tbladdpackage` (`id`, `category`, `titlename`, `PackageType`, `PackageDuratiobn`, `Price`, `uploadphoto`, `Description`, `create_date`) VALUES
+INSERT INTO `tbladdpackage` (`id`, `category`, `titlename`, `PackageType`, `NumberOfPets`, `Price`, `uploadphoto`, `Description`, `create_date`) VALUES
 (1, '1', 'Essential PawPrint License', '1', '1 Furry Friend', '299', NULL, 'Standard identification and registration for responsible pet ownership, ensuring safety and peace of mind.', '2022-03-05 02:55:34'),
 (2, '1', 'Purrfection Plus License', '1', 'Up to 3 Furry Friends', '499', NULL, 'Elevate your pet\'s experience with exclusive grooming discounts, personalized tags, and quarterly wellness checks', '2022-03-05 02:56:44'),
-(3, '1', 'Adventure Tails Explorer License', '1', 'Soccer size Furry Friends', '999', NULL, 'Unlock exclusive access to pet-friendly events, excursions, and a community of fellow enthusiasts for an adventurous companionship.<div><br></div><div>A journey of fun!</div>', '2022-05-22 02:34:08');
+(3, '1', 'Adventure Tails Explorer License', '1', 'Soccer-team size Furry Friends', '999', NULL, 'Unlock exclusive access to pet-friendly events, excursions, and a community of fellow enthusiasts<div><br></div>', '2022-05-22 02:34:08');
 
 -- --------------------------------------------------------
 

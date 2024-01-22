@@ -10,18 +10,18 @@ if(isset($_POST['Submit'])){
 $category = $_POST['category'];
 $titlename = $_POST['titlename'];
 $package = $_POST['package'];
-$packageduratiobn = $_POST['packageduratiobn'];
+$NumberOfPets = $_POST['NumberOfPets'];
 $Price = $_POST['Price'];
 $photo = $_POST['photo'];
 $description = $_POST['description'];
 $sql="update tbladdpackage set category=:category,titlename=:titlename,PackageType=:package,
-packageduratiobn=:packageduratiobn,Price=:Price,description=:description where id=:pid";
+NumberOfPets=:NumberOfPets,Price=:Price,description=:description where id=:pid";
 
 $query = $dbh -> prepare($sql);
 $query->bindParam(':category',$category,PDO::PARAM_STR);
 $query->bindParam(':titlename',$titlename,PDO::PARAM_STR);
 $query->bindParam(':package',$package,PDO::PARAM_STR);
-$query->bindParam(':packageduratiobn',$packageduratiobn,PDO::PARAM_STR);
+$query->bindParam(':NumberOfPets',$NumberOfPets,PDO::PARAM_STR);
 $query->bindParam(':Price',$Price,PDO::PARAM_STR);
 $query->bindParam(':description',$description,PDO::PARAM_STR);
 $query->bindParam(':pid',$pid,PDO::PARAM_STR);
@@ -123,7 +123,7 @@ echo "<script>window.location.href='manage-post.php'</script>";
 
                  <div class="form-group col-md-6">
                   <label class="control-label">Package Duratiobn</label>
-                  <input class="form-control" type="text" name="packageduratiobn" name="packageduratiobn" placeholder="Enter Package Duratiobn" value="<?php echo $result->PackageDuratiobn;?>">
+                  <input class="form-control" type="text" name="NumberOfPets" name="NumberOfPets" placeholder="Enter Package Duratiobn" value="<?php echo $result->NumberOfPets;?>">
                 </div>
 
                  <div class="form-group col-md-6">

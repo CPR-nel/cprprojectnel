@@ -74,7 +74,7 @@ if(Isset($_POST['Submit'])){?>
         <th>email</th>
         <th>bookingdate</th>
         <th hidden>title</th>
-        <th>PackageDuratiobn</th>
+        <th>NumberOfPets</th>
         <th>price</th>
         <th hidden>Description</th>
         <th>category_name</th>
@@ -84,7 +84,7 @@ if(Isset($_POST['Submit'])){?>
                   </tr>
                 </thead>
                   <?php
-                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.PackageDuratiobn as PackageDuratiobn,
+                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.NumberOfPets as NumberOfPets,
 t2.Price as Price,t2.Description as Description,t4.category_name as category_name,t5.PackageName as PackageName FROM tblbooking as t1
  join tbladdpackage as t2
 on t1.package_id =t2.id
@@ -115,7 +115,7 @@ where date(booking_date) between :fdate and :tdate";
                     <td><?php echo htmlentities($result->email);?></td>
                     <td><?php echo htmlentities($result->bookingdate);?></td>
                     <td hidden><?php echo htmlentities($result->title);?></td>
-                    <td><?php echo htmlentities($result->PackageDuratiobn);?></td>
+                    <td><?php echo htmlentities($result->NumberOfPets);?></td>
                     <td><?php echo $result->Price;?></td>
                     <td hidden><?php echo $result->Description;?></td>
                     <td><?php echo htmlentities($result->category_name);?></td>

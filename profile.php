@@ -40,7 +40,7 @@ echo "<script> window.location.href =profile.php;</script>";
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>Gym Management System | User Profile</title>
+	<title>Pet Licensing Company | User Profile</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->

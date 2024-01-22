@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>Gym Management System</title>
+	<title>Pet Licensing Company</title>
 	<meta charset="UTF-8">
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="css/bootstrap.min.css"/>

@@ -58,7 +58,7 @@ $uid=$_SESSION['uid'];
 					   <table class="table table-hover table-bordered">
                 <thead>
                    <?php $bookindid=$_GET['bookingid'];
-                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.PackageDuratiobn as PackageDuratiobn,
+                  $sql="SELECT t1.id as bookingid,t3.fname as Name, t3.email as email,t1.booking_date as bookingdate,t2.titlename as title,t2.NumberOfPets as NumberOfPets,
 t2.Price as Price,t2.Description as Description,t4.category_name as category_name,t5.PackageName as PackageName,payment,paymentType FROM tblbooking as t1
  join tbladdpackage as t2
 on t1.package_id =t2.id
@@ -99,7 +99,7 @@ on t2.PackageType=t5.id
                   </tr>
                   <tr>
                    <th>Package Duratiobn</th>
-                   <td><?php echo $result->PackageDuratiobn; ?></td>
+                   <td><?php echo $result->NumberOfPets; ?></td>
                     <th>Price</th>
                     <td><?php echo $result->Price; ?></td>
                     <?php $pricess=$result->Price; ?>

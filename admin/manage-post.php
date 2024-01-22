@@ -71,7 +71,7 @@ if (strlen($_SESSION['adminid']==0)) {
                     <td><?php echo htmlentities($result->category_name);?></td>
                   <td><?php echo htmlentities($result->PackageName);?></td>
                   <td><?php echo htmlentities($result->titlename);?></td>
-                  <td><?php echo htmlentities($result->PackageDuratiobn);?></td>
+                  <td><?php echo htmlentities($result->NumberOfPets);?></td>
                   <td><?php echo htmlentities($result->Price);?></td>
                   <?php $id=$result->category_name;?>
                   <td>
