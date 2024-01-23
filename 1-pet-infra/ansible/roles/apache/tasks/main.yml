@@ -1,13 +1,11 @@
----
-- name: Install apache2
+- name: Install Apache2 Package
   apt:
     name: apache2
     state: present
     update_cache: yes
   tags: [packages]
 
-
-- name: Create document root for domain configured in host variable
+- name: Create Root Directory for Specified Domain
   file:
     path: "/var/www/{{ web_host }}"
     state: directory
@@ -15,16 +13,16 @@
     group: www-data
     mode: '0755'
 
-- name: Set up virtuahHost
+- name: Configure Virtual Host Settings
   template:
     src: "apache-template.conf.j2"
     dest: "/etc/apache2/sites-available/{{ web_host }}.conf"
 
-- name: Enable site
+- name: Activate Apache Site Configuration
   command: a2ensite {{ web_host }}.conf
   notify: restart apache
 
-- name: Allow HTTP on port {{ web_port }}"
+- name: Allow Inbound HTTP Traffic on Port {{ web_port }}"
   ufw:
     rule: allow
     proto: tcp

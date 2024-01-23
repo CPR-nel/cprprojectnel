@@ -1,5 +1,4 @@
----
-- name: Configure Web Server
+- name: Set Up Web Server Configuration
   hosts: _web_server
   gather_facts: false
   become: true
@@ -7,5 +6,3 @@
     - git
     - apache
     - php
-
-...

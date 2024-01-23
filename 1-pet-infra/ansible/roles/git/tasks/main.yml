@@ -1,13 +1,12 @@
----
-# tasks file for git
+# Tasks for Git Operations
 
-- name: Install git package
+- name: Ensure git Package is Installed
   apt:
     name: git
     update_cache: yes
     state: present
 
-- name: Git Checkout
+- name: Perform Git Checkout
   git:
     repo: "{{ repo_url }}/{{ repo_name }}.git"
     version: "{{ git_branch }}"

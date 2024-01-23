@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'AWS_REGION', defaultValue: 'us-east-2', description: 'AWS Region for deployment')
-        booleanParam(name: 'APPROVE', defaultValue: false, description: 'Approve Terraform changes')
-        booleanParam(name: 'PLAN', defaultValue: false, description: 'Run Terraform plan')
-        booleanParam(name: 'DESTROY', defaultValue: false, description: 'Run Terraform destroy')
+        booleanParam(name: 'CREATE_RESOURCES', defaultValue: false, description: 'Create Terraform resources')
+        booleanParam(name: 'DESTROY_RESOURCES', defaultValue: false, description: 'Destroy Terraform resources')
+        booleanParam(name: 'ASK_FOR_CONFIRMATION', defaultValue: true, description: 'Ask for approval before applying or destroying')
+        booleanParam(name: 'ONLY_PLAN', defaultValue: false, description: 'Run Terraform plan only')
     }
 
     stages {
@@ -18,16 +18,29 @@ pipeline {
                         dir('1-pet-infra/terraform') {
                             sh 'terraform init -input=false'
 
-                            if (params.PLAN) {
-                                sh "terraform plan -var 'region=${params.AWS_REGION}' -input=false"
-                            } else if (params.DESTROY) {
-                                input "Do you want to destroy the infrastructure? (Requires approval)"
-                                sh "terraform destroy -auto-approve -var 'region=${params.AWS_REGION}'"
-                            } else if (params.APPROVE) {
-                                input "Do you want to apply Terraform changes? (Requires approval)"
-                                sh "terraform apply -auto-approve -var 'region=${params.AWS_REGION}'"
+                            if (params.ONLY_PLAN) {
+                                // Display Terraform plan
+                                sh 'terraform plan -input=false'
                             } else {
-                                echo "No action specified. Set 'PLAN', 'DESTROY', or 'APPROVE' parameter."
+                                // Display Terraform plan
+                                sh 'terraform plan -input=false'
+                                
+                                // Prompt for approval only if PLAN is true and ASK_FOR_CONFIRMATION is selected
+                                if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
+                                    if (params.CREATE_RESOURCES) {
+                                        input "Do you want to apply Terraform changes? (Requires approval)"
+                                        sh 'terraform apply -auto-approve'
+                                    } else if (params.DESTROY_RESOURCES) {
+                                        input "Do you want to destroy the infrastructure? (Requires approval)"
+                                        sh 'terraform destroy -auto-approve'
+                                    }
+                                } else if (params.CREATE_RESOURCES) {
+                                    // Apply Terraform changes without approval
+                                    sh 'terraform apply -auto-approve'
+                                } else if (params.DESTROY_RESOURCES) {
+                                    // Destroy infrastructure without approval
+                                    sh 'terraform destroy -auto-approve'
+                                }
                             }
                         }
                     }
@@ -40,7 +53,12 @@ pipeline {
                 script {
                     // Change to your Ansible directory
                     dir('1-pet-infra/ansible') {
-                        sh 'ansible-playbook --vault-id .password site.yml'
+                        // Only run Ansible if create_resources or destroy_resources are selected
+                        if (params.CREATE_RESOURCES || params.DESTROY_RESOURCES) {
+                            sh 'ansible-playbook --vault-id .password site.yml'
+                        } else {
+                            echo 'Skipping Ansible configuration as no infra is provisioned.'
+                        }
                     }
                 }
             }
