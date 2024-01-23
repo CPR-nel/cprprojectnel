@@ -3,9 +3,10 @@ pipeline {
 
     parameters {
         string(name: 'AWS_REGION', defaultValue: 'us-east-2', description: 'AWS Region for deployment')
-        booleanParam(name: 'APPROVE', defaultValue: false, description: 'Approve Terraform changes')
-        booleanParam(name: 'PLAN', defaultValue: false, description: 'Run Terraform plan')
-        booleanParam(name: 'DESTROY', defaultValue: false, description: 'Run Terraform destroy')
+        booleanParam(name: 'CREATE_RESOURCES', defaultValue: false, description: 'Create AWS resources')
+        booleanParam(name: 'DESTROY_RESOURCES', defaultValue: false, description: 'Destroy AWS resources')
+        booleanParam(name: 'ASK_FOR_CONFIRMATION', defaultValue: true, description: 'Ask for confirmation before applying or destroying resources')
+        booleanParam(name: 'ONLY_PLAN', defaultValue: false, description: 'Only run Terraform plan')
     }
 
     stages {
@@ -18,19 +19,22 @@ pipeline {
                         dir('1-pet-infra/terraform') {
                             sh 'terraform init -input=false'
 
-                            if (params.PLAN) {
+                            if (params.ONLY_PLAN) {
                                 // Display Terraform plan
                                 sh "terraform plan -var 'region=${params.AWS_REGION}' -input=false"
-                                // Prompt for approval only if PLAN is true
-                                if (params.APPROVE) {
-                                    input "Do you want to apply Terraform changes? (Requires approval)"
-                                    sh "terraform apply -auto-approve -var 'region=${params.AWS_REGION}'"
-                                }
-                            } else if (params.DESTROY) {
-                                input "Do you want to destroy the infrastructure? (Requires approval)"
-                                sh "terraform destroy -auto-approve -var 'region=${params.AWS_REGION}'"
                             } else {
-                                echo "No action specified. Set 'PLAN', 'DESTROY', or 'APPROVE' parameter."
+                                def terraformCommand = "terraform ${params.DESTROY_RESOURCES ? 'destroy -auto-approve' : 'apply -auto-approve'} -var 'region=${params.AWS_REGION}'"
+
+                                if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
+                                    // Display Terraform plan
+                                    sh "terraform plan -var 'region=${params.AWS_REGION}' -input=false"
+
+                                    // Prompt for explicit approval
+                                    input "Do you want to apply/destroy Terraform changes? (Requires approval)"
+                                }
+
+                                // Execute Terraform command
+                                sh terraformCommand
                             }
                         }
                     }
