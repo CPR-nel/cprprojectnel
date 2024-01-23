@@ -7,22 +7,6 @@ terraform {
   }
 }
 
-# Generate ansible_vars.json using null_resource and local-exec
-resource "null_resource" "generate_ansible_vars" {
-  triggers = {
-    always_run = timestamp()
-  }
-
-  provisioner "local-exec" {
-    command = <<EOF
-      echo '{
-        "web_server_ip": "${module.ec2.web_server_1_public_ip}",
-        "rds_hostname": "${module.rds.rds_hostname}"
-      }' > ansible_vars.json
-    EOF
-  }
-}
-
 # Module for Key Pair
 module "key-pair" {
   home_dir = var.home_dir # used for storing pem file
@@ -71,4 +55,20 @@ module "rds" {
   private_subnets      = module.vpc.private_subnet_ids
   source               = "./modules/rds"
   username             = var.username
+}
+
+# Generate ansible_vars.json using null_resource and local-exec
+resource "null_resource" "generate_ansible_vars" {
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo '{
+        "web_server_ip": "${module.ec2.web_server_1_public_ip}",
+        "rds_hostname": "${module.rds.rds_hostname}"
+      }' > ansible_vars.json
+    EOF
+  }
 }
