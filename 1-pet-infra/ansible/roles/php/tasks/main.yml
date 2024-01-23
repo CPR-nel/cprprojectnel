@@ -1,6 +1,6 @@
 ---
 # tasks for php
-- name: Install php and other dependencies
+- name: Ensure PHP and Dependencies are Installed
   apt:
      name: "{{ item }}"
      state: present
@@ -9,13 +9,13 @@
    - php
    - php-mysql
 
-- name: Check sql script file
+- name: Check Existence of SQL Script File
   stat: 
     path: "{{ script_file }}"
   register: check_file
 
 
-- name: Import database
+- name: Import Data into Database from SQL Script
   mysql_db:
     name: "{{ db_name }}"
     state: import
@@ -28,7 +28,7 @@
 - name: Copy all files to /var/www/{{ web_host }}
   shell: cp -r {{ repo_dir }}/* /var/www/{{ web_host }}
 
-- name: Remove default connection files
+- name: Delete Default Connection Files from /var/www/{{ web_host }}
   file:
     path: "{{ item }}"
     state: absent
@@ -37,7 +37,7 @@
     - "/var/www/{{ web_host }}/admin/include/config.php"
 
 
-- name: Copy database connection files
+- name: Copy database connection files to /var/www/{{ web_host }}
   template:
     src: "config.php.j2"
     dest: "{{ item.dest }}"

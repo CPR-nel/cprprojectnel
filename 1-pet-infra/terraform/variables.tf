@@ -1,4 +1,4 @@
-# AWS
+# AWS Configuration Variables
 variable "region" {
   default     = "us-east-1"
   description = "Name of the AWS region"
@@ -17,9 +17,9 @@ variable "env" {
   type        = string
 }
 
-#  VPC
+# Virtual Private Cloud (VPC) Variables
 variable "cidr_block" {
-  default = "10.0.0.0/16"
+  default = "10.1.0.0/16" 
   type    = string
 }
 
@@ -43,7 +43,7 @@ variable "private_subnet_cidr_blocks" {
   description = "List of Private Subnet Blocks"
 }
 
-# EC2
+# Elastic Cloud Compute (EC2) Variables
 variable "ami" {
   default     = "ami-053b0d53c279acc90"
   description = "Name of the software image"
@@ -74,7 +74,7 @@ variable "az3" {
   type        = string
 }
 
-# RDS
+# Amazon RDS Variables
 variable "identifier" {
   type        = string
   default     = "docupet"
@@ -95,7 +95,6 @@ variable "db_storage" {
 variable "storage_type" {
   type    = string
   default = "gp2"
-
 }
 
 variable "engine" {
@@ -122,14 +121,13 @@ variable "db_password" {
   sensitive   = true
 }
 
-
-# Key Pair
+# Key Pair Variables
 variable "key_name" {
   default     = "web-test"
   description = "Name of Key-Pair"
 }
 
-# User home directory
+# User home directory Variable
 variable "home_dir" {
   default     = ""
   description = "Name of the user home directory"

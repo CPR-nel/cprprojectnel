@@ -1,7 +1,7 @@
 ---
-# tasks for mysql
+# MySQL Configuration Tasks
 - include_vars: secrets.yml
-- name: Install mysql and other dependencies
+- name: Ensure Presence of MySQL and Required Dependencies
   apt:
     name: "{{ item }}"
     update_cache: yes
@@ -12,12 +12,12 @@
     - mysql-client
   tags: [ packages, mysql ]
 
-- name: Install pymysql python package
+- name: Install PyMySQL Python Package
   ansible.builtin.pip:
     name: pymysql==1.1.0
 
 
-- name: Ensure mysql is enabled to run on startup
+- name: Enable MySQL Service for Startup
   service:
     name: mysql
     state: started
@@ -27,7 +27,7 @@
 
 
 
-- name: Create MySQL database
+- name: Set Up MySQL Database
   mysql_db:
     name: "{{ db_name }}"
     state: present

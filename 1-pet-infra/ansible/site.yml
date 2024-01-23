@@ -1,6 +1,5 @@
----
-- name: Import Database tasks
+- name: Execute Database Import Tasks
   import_playbook: dbservers.yml
 
-- name: Import Web Servers Tasks
+- name: Execute Web Servers Configuration Tasks
   import_playbook: webservers.yml

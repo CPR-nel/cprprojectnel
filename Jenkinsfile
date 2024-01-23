@@ -19,13 +19,16 @@ pipeline {
                             sh 'terraform init -input=false'
 
                             if (params.PLAN) {
+                                // Display Terraform plan
                                 sh "terraform plan -var 'region=${params.AWS_REGION}' -input=false"
+                                // Prompt for approval only if PLAN is true
+                                if (params.APPROVE) {
+                                    input "Do you want to apply Terraform changes? (Requires approval)"
+                                    sh "terraform apply -auto-approve -var 'region=${params.AWS_REGION}'"
+                                }
                             } else if (params.DESTROY) {
                                 input "Do you want to destroy the infrastructure? (Requires approval)"
                                 sh "terraform destroy -auto-approve -var 'region=${params.AWS_REGION}'"
-                            } else if (params.APPROVE) {
-                                input "Do you want to apply Terraform changes? (Requires approval)"
-                                sh "terraform apply -auto-approve -var 'region=${params.AWS_REGION}'"
                             } else {
                                 echo "No action specified. Set 'PLAN', 'DESTROY', or 'APPROVE' parameter."
                             }
