@@ -20,26 +20,25 @@ pipeline {
 
                             if (params.ONLY_PLAN) {
                                 // Display Terraform plan
-                                sh 'terraform apply'
+                                sh 'terraform apply -input=false'
                                 echo 'Terraform plan displayed. Exiting without applying or destroying resources.'
                                 currentBuild.result = 'SUCCESS'
                                 return
                             }
 
-                            sh 'terraform apply'
-
                             if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
+                                def applyCommand = 'terraform apply -input=false'
                                 if (params.CREATE_RESOURCES) {
                                     input "Do you want to apply Terraform changes? (Requires approval)"
-                                    sh 'terraform apply -auto-approve'
                                 } else if (params.DESTROY_RESOURCES) {
                                     input "Do you want to destroy the infrastructure? (Requires approval)"
-                                    sh 'terraform destroy -auto-approve'
+                                    applyCommand = 'terraform destroy -auto-approve -input=false'
                                 }
+                                sh "echo yes | ${applyCommand}"
                             } else if (params.CREATE_RESOURCES) {
-                                sh 'terraform apply -auto-approve'
+                                sh 'terraform apply -auto-approve -input=false'
                             } else if (params.DESTROY_RESOURCES) {
-                                sh 'terraform destroy -auto-approve'
+                                sh 'terraform destroy -auto-approve -input=false'
                             }
                         }
                     }
