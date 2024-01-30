@@ -27,7 +27,7 @@ pipeline {
                             }
 
                             if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
-                                def applyCommand = 'terraform apply -input=false'
+                                def applyCommand = 'terraform apply -auto-approve -input=false'
                                 if (params.CREATE_RESOURCES) {
                                     // Display Terraform plan
                                     sh 'terraform plan -input=false'
@@ -46,4 +46,37 @@ pipeline {
                             } else if (params.DESTROY_RESOURCES) {
                                 // Display Terraform plan
                                 sh 'terraform plan -destroy -input=false'
-                                sh 'terraform destroy -auto-approve -input
+                                sh 'terraform destroy -auto-approve -input=false'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Ansible Configuration') {
+            steps {
+                script {
+                    // Change to your Ansible directory
+                    dir('1-pet-infra/ansible') {
+                        // Only run Ansible if create_resources or destroy_resources are selected
+                        if (params.CREATE_RESOURCES || params.DESTROY_RESOURCES) {
+                            sh 'ansible-playbook --vault-id .password site.yml'
+                        } else {
+                            echo 'Skipping Ansible configuration as no infra is provisioned.'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}
