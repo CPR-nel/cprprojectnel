@@ -20,7 +20,7 @@ pipeline {
 
                             if (params.ONLY_PLAN) {
                                 // Display Terraform plan
-                                sh 'terraform plan -input=false'
+                                sh 'terraform apply'
                                 echo 'Terraform plan displayed. Exiting without applying or destroying resources.'
                                 currentBuild.result = 'SUCCESS'
                                 return
