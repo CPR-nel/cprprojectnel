@@ -18,8 +18,16 @@ pipeline {
                         dir('1-pet-infra/terraform') {
                             sh 'terraform init -input=false'
 
-                            // Display Terraform plan regardless of approval status
-                            sh 'terraform plan -input=false'
+                            // If ONLY_PLAN is selected, display the plan and exit without applying or destroying
+                            if (params.ONLY_PLAN) {
+                                sh 'terraform apply -input=false'
+                                echo 'Terraform plan displayed. Exiting without applying or destroying resources.'
+                                currentBuild.result = 'SUCCESS'
+                                return
+                            }
+
+                            // Display Terraform plan before asking for approval
+                            sh 'terraform apply -input=false'
 
                             // Prompt for approval only if ASK_FOR_CONFIRMATION is true and (CREATE_RESOURCES or DESTROY_RESOURCES) is selected
                             if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
