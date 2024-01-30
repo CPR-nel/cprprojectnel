@@ -16,20 +16,18 @@ pipeline {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_cred', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                         // Change to your Terraform directory
                         dir('1-pet-infra/terraform') {
-                            sh 'terraform init -input=false'
+                            sh 'terraform init'
 
-                            // If ONLY_PLAN is selected, display the plan and exit without applying or destroying
                             if (params.ONLY_PLAN) {
-                                sh 'terraform apply -input=false'
+                                // Display Terraform plan
+                                sh 'terraform apply'
                                 echo 'Terraform plan displayed. Exiting without applying or destroying resources.'
                                 currentBuild.result = 'SUCCESS'
                                 return
                             }
 
-                            // Display Terraform plan before asking for approval
-                            sh 'terraform apply -input=false'
+                            sh 'terraform apply'
 
-                            // Prompt for approval only if ASK_FOR_CONFIRMATION is true and (CREATE_RESOURCES or DESTROY_RESOURCES) is selected
                             if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
                                 if (params.CREATE_RESOURCES) {
                                     input "Do you want to apply Terraform changes? (Requires approval)"
@@ -39,10 +37,8 @@ pipeline {
                                     sh 'terraform destroy -auto-approve'
                                 }
                             } else if (params.CREATE_RESOURCES) {
-                                // Apply Terraform changes without approval
                                 sh 'terraform apply -auto-approve'
                             } else if (params.DESTROY_RESOURCES) {
-                                // Destroy infrastructure without approval
                                 sh 'terraform destroy -auto-approve'
                             }
                         }
