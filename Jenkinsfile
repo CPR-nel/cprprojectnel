@@ -18,29 +18,31 @@ pipeline {
                         dir('1-pet-infra/terraform') {
                             sh 'terraform init -input=false'
 
+                            // Display Terraform plan regardless of approval status
+                            sh 'terraform plan -input=false'
+
+                            // If ONLY_PLAN is selected, exit the script without applying or destroying
                             if (params.ONLY_PLAN) {
-                                // Display Terraform plan
-                                sh 'terraform plan -input=false'
-                            } else {
-                                // Display Terraform plan
-                                sh 'terraform plan -input=false'
-                                
-                                // Prompt for approval only if PLAN is true and ASK_FOR_CONFIRMATION is selected
-                                if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
-                                    if (params.CREATE_RESOURCES) {
-                                        input "Do you want to apply Terraform changes? (Requires approval)"
-                                        sh 'terraform apply -auto-approve'
-                                    } else if (params.DESTROY_RESOURCES) {
-                                        input "Do you want to destroy the infrastructure? (Requires approval)"
-                                        sh 'terraform destroy -auto-approve'
-                                    }
-                                } else if (params.CREATE_RESOURCES) {
-                                    // Apply Terraform changes without approval
+                                echo 'Terraform plan displayed. Exiting without applying or destroying resources.'
+                                currentBuild.result = 'SUCCESS'
+                                return
+                            }
+
+                            // Prompt for approval only if ASK_FOR_CONFIRMATION is true and (CREATE_RESOURCES or DESTROY_RESOURCES) is selected
+                            if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
+                                if (params.CREATE_RESOURCES) {
+                                    input "Do you want to apply Terraform changes? (Requires approval)"
                                     sh 'terraform apply -auto-approve'
                                 } else if (params.DESTROY_RESOURCES) {
-                                    // Destroy infrastructure without approval
+                                    input "Do you want to destroy the infrastructure? (Requires approval)"
                                     sh 'terraform destroy -auto-approve'
                                 }
+                            } else if (params.CREATE_RESOURCES) {
+                                // Apply Terraform changes without approval
+                                sh 'terraform apply -auto-approve'
+                            } else if (params.DESTROY_RESOURCES) {
+                                // Destroy infrastructure without approval
+                                sh 'terraform destroy -auto-approve'
                             }
                         }
                     }
