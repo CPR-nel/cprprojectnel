@@ -20,7 +20,7 @@ pipeline {
 
                             if (params.ONLY_PLAN) {
                                 // Display Terraform plan
-                                sh 'terraform apply -input=false'
+                                sh 'terraform plan -input=false'
                                 echo 'Terraform plan displayed. Exiting without applying or destroying resources.'
                                 currentBuild.result = 'SUCCESS'
                                 return
@@ -29,46 +29,21 @@ pipeline {
                             if (params.ASK_FOR_CONFIRMATION && (params.CREATE_RESOURCES || params.DESTROY_RESOURCES)) {
                                 def applyCommand = 'terraform apply -input=false'
                                 if (params.CREATE_RESOURCES) {
+                                    // Display Terraform plan
+                                    sh 'terraform plan -input=false'
                                     input "Do you want to apply Terraform changes? (Requires approval)"
                                 } else if (params.DESTROY_RESOURCES) {
+                                    // Display Terraform plan
+                                    sh 'terraform plan -destroy -input=false'
                                     input "Do you want to destroy the infrastructure? (Requires approval)"
                                     applyCommand = 'terraform destroy -auto-approve -input=false'
                                 }
                                 sh "echo yes | ${applyCommand}"
                             } else if (params.CREATE_RESOURCES) {
+                                // Display Terraform plan
+                                sh 'terraform plan -input=false'
                                 sh 'terraform apply -auto-approve -input=false'
                             } else if (params.DESTROY_RESOURCES) {
-                                sh 'terraform destroy -auto-approve -input=false'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Ansible Configuration') {
-            steps {
-                script {
-                    // Change to your Ansible directory
-                    dir('1-pet-infra/ansible') {
-                        // Only run Ansible if create_resources or destroy_resources are selected
-                        if (params.CREATE_RESOURCES || params.DESTROY_RESOURCES) {
-                            sh 'ansible-playbook --vault-id .password site.yml'
-                        } else {
-                            echo 'Skipping Ansible configuration as no infra is provisioned.'
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed!'
-        }
-    }
-}
+                                // Display Terraform plan
+                                sh 'terraform plan -destroy -input=false'
+                                sh 'terraform destroy -auto-approve -input
